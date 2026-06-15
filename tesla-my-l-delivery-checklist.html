@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla Model Y L: Delivery Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #111116;
+    --surface2: #18181f;
+    --border: #2a2a35;
+    --accent: #c8a96e;
+    --accent2: #e8c98e;
+    --red: #e05555;
+    --green: #5ec47a;
+    --text: #e8e8f0;
+    --muted: #70708a;
+    --muted2: #505060;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 100px;
+    overflow-x: hidden;
+  }
+
+  .hero {
+    position: relative;
+    padding: 56px 24px 44px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(200,169,110,0.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.85;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 9vw, 54px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.07em;
+    margin-top: 8px;
+  }
+
+  .progress-wrap {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .progress-count {
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .sections {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .section-header:hover { background: var(--surface2); }
+
+  .section-icon {
+    font-size: 18px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .section-meta { flex: 1; }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+
+  .section-progress {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .section-chevron {
+    color: var(--muted2);
+    font-size: 12px;
+    transition: transform 0.25s ease;
+  }
+
+  .section.open .section-chevron { transform: rotate(180deg); }
+
+  .section-body {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .section.open .section-body { display: block; }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: rgba(255,255,255,0.02); }
+
+  .item input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    background: var(--bg);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .item input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1.5px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid #0a0a0c;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+
+  .item-content { flex: 1; }
+
+  .item-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .item-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .item input:checked ~ .item-content .item-label {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--muted2);
+  }
+
+  .badge-critical {
+    font-size: 9px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(224,85,85,0.15);
+    color: var(--red);
+    border: 1px solid rgba(224,85,85,0.3);
+    border-radius: 4px;
+    padding: 2px 6px;
+    flex-shrink: 0;
+  }
+
+  .item-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .footer-note {
+    max-width: 680px;
+    margin: 32px auto 0;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .footer-note p {
+    font-size: 12px;
+    color: var(--muted2);
+    font-family: 'DM Mono', monospace;
+    line-height: 1.6;
+  }
+
+  .footer-note .disclaimer {
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .completion-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: var(--green);
+    color: #080d0a;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 40px;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 100;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(94,196,122,0.3);
+  }
+
+  .completion-toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 480px) {
+    .hero { padding: 44px 16px 36px; }
+    .sections, .progress-wrap, .footer-note { padding: 0 14px; }
+    .item { padding: 12px 16px; }
+    .section-header { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Delivery Checklist</div>
+  <h1>Inspect <em>your Tesla</em><br>before you drive away.</h1>
+  <div class="hero-sub">Model Y L &nbsp;·&nbsp; 6-Seater &nbsp;·&nbsp; Philippines</div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-header">
+    <span class="progress-label">Inspection Progress</span>
+    <span class="progress-count" id="countDisplay">0 / 0</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<div class="sections" id="sections">
+
+  <!-- SECTION 1: EXTERIOR -->
+  <div class="section open" data-section="exterior">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon">🚗</div>
+      <div class="section-meta">
+        <div class="section-title">Exterior Inspection</div>
+        <div class="section-progress" id="prog-exterior">0 / 0 items</div>
+      </div>
+      <div class="section-chevron">▼</div>
+    </div>
+    <div class="section-body">
+
+      <div class="item">
+        <input type="checkbox" id="e1" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e1">Panel gaps are even and consistent</label></div>
+          <div class="item-note">Walk all four sides. Check hood, frunk, all doors, trunk lid, and rear hatch. Gaps should be uniform. Uneven gaps may signal a replaced panel or improper assembly.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e2" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e2">Paint quality: no scratches, chips, swirl marks, or orange peel</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">Check in multiple lighting angles. Pay close attention to A-pillars, roof rails, door edges, and sills. Darker colors hide less than lighter ones. Inspect equally regardless of color.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e3" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e3">Glass: no chips, cracks, or distortions</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">Inspect windshield, front and rear quarter windows, panoramic roof glass, and rear window. The front door windows are acoustic laminated glass; look for any delamination bubbles along the edges. Chips may be exempt from warranty after delivery.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e4" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e4">Redesigned headlights illuminate evenly on both sides</label></div>
+          <div class="item-note">Confirm both sides light up evenly and that the DRL signature looks consistent left-to-right. Check for any condensation inside the housing.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e5" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e5">Full-width rear light bar glows uniformly end-to-end</label></div>
+          <div class="item-note">The full-width rear light bar spans the entire tailgate. Activate brake lights and tail lights and step back to check for dark spots, uneven brightness, or sections that don't illuminate. Any dead segment is a warranty item. Flag it before signing.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e6" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e6">All remaining lights: turn signals, reverse, fog</label></div>
+          <div class="item-note">Test front and rear turn signals, reverse lights, and rear fog lights. Use the Controls menu on the display to cycle through all light functions.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e7" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e7">Wheels: no curb rash, correct spec, proper fitment</label></div>
+          <div class="item-note">Verify wheel size and tire spec match your order confirmation. Check all four wheels for curb rash or shipping damage. Tires should be freshly inflated to the recommended PSI (visible on the driver's door jamb sticker).</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e8" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e8">Flush door handles present and retract on all four doors</label></div>
+          <div class="item-note">Walk up to each door with the key; handles should extend automatically. Push back in firmly after. Any sticking, slow travel, or failure to present should be flagged before leaving.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e9" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e9">All cameras: clean lenses, no cracks or misalignment</label></div>
+          <div class="item-note">Front nose, rear bumper, both B-pillars, and the repeater cameras on the front fenders. Verify each feed appears on the display and the image is clear with no distortion.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e10" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e10">Charge port opens, closes, and latches cleanly</label></div>
+          <div class="item-note">Open via the display and via the wall plug press. Check for paint damage around the port door and confirm the indicator light activates on connection.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e11" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e11">Frunk and trunk open, close, and latch properly</label></div>
+          <div class="item-note">Frunk should close flush with a firm push. Power trunk: check open/close from the display and the hands-free kick sensor. Confirm the trunk weather seal sits flush all around.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e12" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e12">Door seals and weatherstripping intact all around</label></div>
+          <div class="item-note">Press along each door seal. Gaps or lifted sections can cause wind noise and water intrusion. Any squeaks at this stage are worth noting.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="e13" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="e13">VIN plate visible and matches all documents</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">Check the dash (lower left, windshield side), driver's door jamb sticker, and your registration papers. All three must match exactly.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2: INTERIOR -->
+  <div class="section" data-section="interior">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon">🪑</div>
+      <div class="section-meta">
+        <div class="section-title">Interior Inspection</div>
+        <div class="section-progress" id="prog-interior">0 / 0 items</div>
+      </div>
+      <div class="section-chevron">▼</div>
+    </div>
+    <div class="section-body">
+
+      <div class="item">
+        <input type="checkbox" id="i1" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i1">All seats: no tears, scuffs, or staining</label></div>
+          <div class="item-note">Inspect all six seats across three rows. Check seams, headrests, and bolster edges. Light-colored interiors show flaws more readily. Take your time here regardless of trim color.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i2" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i2">Ventilated front seats: cooling function works</label></div>
+          <div class="item-note">The Model Y L includes ventilated front seats. Go to Climate on the display and activate seat ventilation on both driver and passenger sides. You should feel airflow within 30 seconds. This is a Premium-exclusive feature. Check it while you're still at the showroom.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i3" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i3">All seat belts latch, retract, and lock properly</label></div>
+          <div class="item-note">Click and pull each belt sharply to verify the locking mechanism. Slowly release and confirm full retraction at all six seating positions. Don't skip the third row.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i4" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i4">Panoramic glass roof: no cracks, delamination, or seal gaps</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">This Model Y L has a fixed panoramic glass roof with no motorized interior shade. Look up from all rows for cracks or delamination (cloudy patches between glass layers). Check the seal perimeter between glass and headliner on all sides. There is nothing to slide or fold. If any panel moves, flag it.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i5" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i5">Headliner, A/B/C/D pillars, and door cards: no gaps or trim lifts</label></div>
+          <div class="item-note">Run your hand along the panel edges. The door cards have integrated ambient lighting strips; press gently to confirm panels are fully seated. Listen for creaks when pushing softly.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i6" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i6">16" main touchscreen: no dead pixels, pressure marks, or cracks</label></div>
+          <div class="item-note">Swipe through a white background (display brightness settings) to check for dead pixels. Tap all four corners and all edges to confirm consistent touch registration. Any dead zone or mark is a warranty item. Photograph it before signing.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i7" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i7">Rear 8" touchscreen: no dead pixels, powers on, responds to touch</label></div>
+          <div class="item-note">A dedicated 8-inch screen for rear passengers is mounted on the back of the center console. Confirm it powers on, displays content, and responds to touch across the full surface. Check for dead pixels by navigating to a solid white background.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i8" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i8">Round steering wheel: no surface defects, all buttons respond</label></div>
+          <div class="item-note">This Model Y L has a round steering wheel, not a yoke. Check the rim surface for blemishes or uneven stitching. Confirm all physical buttons click and that both scroll wheels register input on the main display.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i9" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i9">Ambient lighting strips cycle correctly throughout the cabin</label></div>
+          <div class="item-note">Ambient LED strips run along the door cards and dashboard. Go to Controls > Lights > Ambient Light and cycle through colors. Every strip should illuminate evenly with no dead sections. An unlit segment is a warranty item to document now.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i10" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i10">All windows go up and down smoothly</label></div>
+          <div class="item-note">Test each window including any rear quarter windows. Check auto-up/down on the driver's window. Confirm no rattling or resistance in the window channels.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i11" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i11">Third-row seats fold and unfold without binding</label></div>
+          <div class="item-note">The Model Y L is a 6-seater with two seats in the third row. Cycle both seats up and down. Confirm they lock flush in both positions and that the floor carpet underneath is undamaged.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i12" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i12">Floor, carpet, and mats: no stains, damage, or missing pieces</label></div>
+          <div class="item-note">Check all rows. Confirm all-weather floor mats are present and clip in securely (if ordered). Lift any loose mats to check the carpet underneath.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i13" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i13">Updated center console: surfaces clean, cupholders and storage work</label></div>
+          <div class="item-note">The center console features revised storage and cupholders. Open and close the armrest. Check the wireless charging pad surface and confirm both phone slots engage when you place a device.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="i14" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="i14">Overhead dome lights and door sill courtesy lights work</label></div>
+          <div class="item-note">Test via Controls > Lights on the display. Check that courtesy lights on all door sills activate on opening. Any non-illuminating section is a warranty item.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3: ELECTRONICS AND FUNCTIONS -->
+  <div class="section" data-section="electronics">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon">⚡</div>
+      <div class="section-meta">
+        <div class="section-title">Electronics and Functions</div>
+        <div class="section-progress" id="prog-electronics">0 / 0 items</div>
+      </div>
+      <div class="section-chevron">▼</div>
+    </div>
+    <div class="section-body">
+
+      <div class="item">
+        <input type="checkbox" id="f1" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f1">Tesla app links to the car correctly</label></div>
+          <div class="item-note">Open the app before leaving. Confirm you can lock/unlock, check battery state, and view the camera feed remotely. VIN shown in the app must match the car.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f2" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f2">Both key cards pair and unlock the car</label></div>
+          <div class="item-note">Tap each card to the B-pillar reader. You should receive two key cards at delivery. Set up your phone key as backup before leaving the showroom.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f3" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f3">Horn works</label></div>
+          <div class="item-note">Press the steering wheel center pad. Quick tap only. No need to hold. Confirm the sound is clean with no distortion.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f4" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f4">Windshield wipers: all speed settings and washer spray work</label></div>
+          <div class="item-note">Enable from the display. Test Auto, Low, and High. Trigger the washer fluid spray. Check for streaking or skipping on either wiper blade.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f5" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f5">Climate control: AC, heat pump, and all vents function</label></div>
+          <div class="item-note">Test cooling and heating. This model includes a heat pump standard. Confirm heating is efficient even at low blower settings. Check airflow from all front and rear vents. Test front and rear defrost modes.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f6" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f6">Speaker system: all channels produce clean sound</label></div>
+          <div class="item-note">Play audio from Bluetooth or the built-in system. Pan audio across all speakers including the subwoofer. A channel that's out or distorted is a warranty item to flag now.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f7" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f7">Bluetooth pairing and phone audio work</label></div>
+          <div class="item-note">Pair your phone. Test call audio and media playback. Confirm microphone pickup on a test call. Make sure your phone key is also set up via the app before leaving.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f8" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f8">USB-A and USB-C ports charge and transfer data</label></div>
+          <div class="item-note">Test at minimum one front port and one rear port. Confirm the dual wireless charging pad engages for both phones simultaneously .</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f9" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f9">Regenerative braking and steering feel correct in motion</label></div>
+          <div class="item-note">If you can move the car in the lot, release the accelerator at low speed and confirm the regen pull feels consistent. Also check that steering response feels natural and linear, with no dead spots or inconsistencies through the turn range.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f10" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f10">Walk-away door lock and Sentry Mode activate</label></div>
+          <div class="item-note">Enable both in Safety settings. Walk away with your phone key and confirm the car locks and the camera icon appears on the display. Sentry Mode requires a USB drive to record footage.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f11" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f11">Autopilot cameras calibrated or status noted</label></div>
+          <div class="item-note">Check Service > Camera Calibration. New deliveries often show "Calibration in progress"; this is normal and clears within a few drives. Note any error states and flag them to your delivery advisor.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="f12" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="f12">Software is on latest version or update is confirmed pending</label></div>
+          <div class="item-note">Go to Software on the display. Note the version number. If an update is pending, schedule it before your first long drive. Ask your delivery advisor if there are any known issues with the current version.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4: DOCUMENTS AND ACCESSORIES -->
+  <div class="section" data-section="docs">
+    <div class="section-header" onclick="toggleSection(this)">
+      <div class="section-icon">📋</div>
+      <div class="section-meta">
+        <div class="section-title">Documents and Accessories</div>
+        <div class="section-progress" id="prog-docs">0 / 0 items</div>
+      </div>
+      <div class="section-chevron">▼</div>
+    </div>
+    <div class="section-body">
+
+      <div class="item">
+        <input type="checkbox" id="d1" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d1">OR/CR and registration documents received</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">Confirm you receive the Certificate of Registration and Official Receipt from Tesla PH, or a clear written timeline for when these arrive if plates are still pending.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d2" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d2">Insurance certificate in hand or confirmed digitally</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">Confirm policy number, coverage dates, and emergency contact number before driving off. Tesla PH typically bundles first-year insurance at delivery. Verify the provider and coverage scope match what was promised.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d3" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d3">CTPL (Compulsory Third Party Liability) confirmed</label><span class="badge-critical">Critical</span></div>
+          <div class="item-note">CTPL is legally required to drive in the Philippines. Verify it is active and included. The sticker should be affixed to the windshield before you drive away.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d4" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d4">Two key cards present and accounted for</label></div>
+          <div class="item-note">Standard Tesla delivery includes two key cards. Store one at home as a dedicated backup. Never keep both cards in the same bag as your daily carry.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d5" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d5">Mobile connector and adapters present in the frunk</label></div>
+          <div class="item-note">Check the frunk for the mobile charging cable and wall adapter. This is your portable Level 1/2 charger for home use until a dedicated wall connector is installed.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d6" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d6">Tire repair kit confirmed present</label></div>
+          <div class="item-note">The Model Y does not include a spare tire. Confirm a tire inflator/repair kit is present and check its location (usually under the trunk floor). Verify the kit is not expired.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d7" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d7">Delivery advisor contact details saved</label></div>
+          <div class="item-note">Save your delivery advisor's direct number before you leave. Any post-delivery issues in the first 72 hours are easiest to resolve through a direct contact rather than the general hotline.</div>
+        </div>
+      </div>
+
+      <div class="item">
+        <input type="checkbox" id="d8" onchange="update()">
+        <div class="item-content">
+          <div class="item-top"><label class="item-label" for="d8">Delivery receipt / acceptance form signed only after full inspection</label></div>
+          <div class="item-note">Do NOT sign until every item above is checked. Signing the acceptance form means you are taking the car as-is. Note any exceptions in writing before signing. Photograph anything you flag.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  <p class="disclaimer">This checklist is a starting point, not a substitute for your own judgment. Not every defect or issue will appear here.</p>
+  <p>Progress saves automatically to this browser. &nbsp;·&nbsp; Tesla Model Y L · 6-Seater · Philippines.</p>
+</div>
+
+<div class="completion-toast" id="toast">🎉 All items checked. She's yours!</div>
+
+<script>
+  const STORAGE_KEY = 'tesla-delivery-checklist-v1';
+
+  const sectionMap = {
+    exterior:    ['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10','e11','e12','e13'],
+    interior:    ['i1','i2','i3','i4','i5','i6','i7','i8','i9','i10','i11','i12','i13','i14'],
+    electronics: ['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10','f11','f12'],
+    docs:        ['d1','d2','d3','d4','d5','d6','d7','d8']
+  };
+
+  function getAllIds() {
+    return Object.values(sectionMap).flat();
+  }
+
+  function save() {
+    const state = {};
+    getAllIds().forEach(id => {
+      state[id] = document.getElementById(id).checked;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      Object.entries(state).forEach(([id, checked]) => {
+        const el = document.getElementById(id);
+        if (el) el.checked = checked;
+      });
+    } catch(e) {}
+  }
+
+  function update() {
+    const all = getAllIds();
+    const total = all.length;
+    const checked = all.filter(id => document.getElementById(id).checked).length;
+
+    document.getElementById('countDisplay').textContent = `${checked} / ${total}`;
+    document.getElementById('progressFill').style.width = `${(checked / total) * 100}%`;
+
+    Object.entries(sectionMap).forEach(([section, ids]) => {
+      const sTotal = ids.length;
+      const sChecked = ids.filter(id => document.getElementById(id).checked).length;
+      const el = document.getElementById(`prog-${section}`);
+      if (el) el.textContent = `${sChecked} / ${sTotal} items`;
+    });
+
+    const toast = document.getElementById('toast');
+    if (checked === total) {
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+    }
+
+    save();
+  }
+
+  function toggleSection(header) {
+    const section = header.closest('.section');
+    section.classList.toggle('open');
+  }
+
+  load();
+  update();
+</script>
+</body>
+</html>
