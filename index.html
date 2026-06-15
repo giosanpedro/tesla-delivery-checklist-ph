@@ -148,6 +148,23 @@
     color: var(--accent2);
   }
 
+
+  .card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
   .card-arrow {
     margin-top: auto;
     padding-top: 14px;
@@ -213,22 +230,46 @@
 
   <a class="card" href="tesla-m3-standard-delivery-checklist.html">
     <div class="card-icon">⚡</div>
-    <div class="card-model">Model 3 <em>Standard</em></div>    <div class="card-arrow">Open checklist →</div>
+    <div class="card-model">Model 3 <em>Standard</em></div>
+    <div class="card-meta">
+      <span class="card-tag">5-Seater · RWD</span>
+      <span class="card-tag">513 km WLTP</span>
+      <span class="card-tag">0-100 in ~6.1s</span>
+    </div>
+    <div class="card-arrow">Open checklist →</div>
   </a>
 
   <a class="card" href="tesla-m3-premium-delivery-checklist.html">
     <div class="card-icon">🏎️</div>
-    <div class="card-model">Model 3 <em>Premium / Performance</em></div>    <div class="card-arrow">Open checklist →</div>
+    <div class="card-model">Model 3 <em>Premium / Performance</em></div>
+    <div class="card-meta">
+      <span class="card-tag">5-Seater · RWD / AWD</span>
+      <span class="card-tag">Up to 629 km WLTP</span>
+      <span class="card-tag">0-100 from 3.1s</span>
+    </div>
+    <div class="card-arrow">Open checklist →</div>
   </a>
 
   <a class="card" href="tesla-my-premium-delivery-checklist.html">
     <div class="card-icon">🚗</div>
-    <div class="card-model">Model Y <em>Premium</em></div>    <div class="card-arrow">Open checklist →</div>
+    <div class="card-model">Model Y <em>Premium</em></div>
+    <div class="card-meta">
+      <span class="card-tag">5-Seater · RWD / AWD</span>
+      <span class="card-tag">Up to 551 km WLTP</span>
+      <span class="card-tag">0-100 from 5.9s</span>
+    </div>
+    <div class="card-arrow">Open checklist →</div>
   </a>
 
   <a class="card" href="tesla-my-l-delivery-checklist.html">
     <div class="card-icon">🚙</div>
-    <div class="card-model">Model Y <em>L</em></div>    <div class="card-arrow">Open checklist →</div>
+    <div class="card-model">Model Y <em>L</em></div>
+    <div class="card-meta">
+      <span class="card-tag">6-Seater · AWD</span>
+      <span class="card-tag">681 km WLTP</span>
+      <span class="card-tag">0-100 in 4.5s</span>
+    </div>
+    <div class="card-arrow">Open checklist →</div>
   </a>
 
 </div>
